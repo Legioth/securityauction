@@ -5,10 +5,9 @@
 
 <web-app>
 
-	<!-- Servlets -->
 	<servlet>
-		<servlet-name>greetServlet</servlet-name>
-		<servlet-class>org.vaadin.securityauction.server.GreetingServiceImpl</servlet-class>
+		<servlet-name>AuctionService</servlet-name>
+		<servlet-class>org.vaadin.securityauction.server.AuctionServiceImpl</servlet-class>
 	</servlet>
 	
 	<servlet>
@@ -21,8 +20,8 @@
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>greetServlet</servlet-name>
-		<url-pattern>/SecurityAuction/greet</url-pattern>
+		<servlet-name>AuctionService</servlet-name>
+		<url-pattern>/SecurityAuction/AuctionService</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>
