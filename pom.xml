@@ -52,6 +52,21 @@
       <classifier>sources</classifier>
       <scope>test</scope>
     </dependency>
+    <dependency>
+    	<groupId>com.vaadin</groupId>
+    	<artifactId>vaadin-server</artifactId>
+    	<version>7.1.5</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.vaadin</groupId>
+    	<artifactId>vaadin-themes</artifactId>
+    	<version>7.1.5</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.vaadin</groupId>
+    	<artifactId>vaadin-client-compiled</artifactId>
+    	<version>7.1.5</version>
+    </dependency>
   </dependencies>
 
   <build>

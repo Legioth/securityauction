@@ -5,20 +5,39 @@
 
 <web-app>
 
-  <!-- Servlets -->
-  <servlet>
-    <servlet-name>greetServlet</servlet-name>
-    <servlet-class>org.vaadin.securityauction.server.GreetingServiceImpl</servlet-class>
-  </servlet>
+	<!-- Servlets -->
+	<servlet>
+		<servlet-name>greetServlet</servlet-name>
+		<servlet-class>org.vaadin.securityauction.server.GreetingServiceImpl</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>vaadinServlet</servlet-name>
+		<servlet-class>com.vaadin.server.VaadinServlet</servlet-class>
+		<init-param>
+			<param-name>UI</param-name>
+			<param-value>org.vaadin.securityauction.vaadin.TestUI</param-value>
+		</init-param>
+	</servlet>
 
-  <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/SecurityAuction/greet</url-pattern>
-  </servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>greetServlet</servlet-name>
+		<url-pattern>/SecurityAuction/greet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>vaadinServlet</servlet-name>
+		<url-pattern>/edit/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>vaadinServlet</servlet-name>
+		<url-pattern>/VAADIN/*</url-pattern>
+	</servlet-mapping>
 
-  <!-- Default page to serve -->
-  <welcome-file-list>
-    <welcome-file>SecurityAuction.html</welcome-file>
-  </welcome-file-list>
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>SecurityAuction.html</welcome-file>
+	</welcome-file-list>
 
 </web-app>
