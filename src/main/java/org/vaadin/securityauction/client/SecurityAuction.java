@@ -74,7 +74,8 @@ public class SecurityAuction implements EntryPoint {
     }
 
     protected void showMainView() {
-        setCurrentView(new HTML("Main view"));
+        MainView mainView = new MainView();
+        setCurrentView(mainView);
     }
 
     protected void showAuctionView(int auctionId) {

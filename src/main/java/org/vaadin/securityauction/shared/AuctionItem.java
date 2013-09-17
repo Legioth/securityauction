@@ -1,17 +1,29 @@
 package org.vaadin.securityauction.shared;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class AuctionItem {
-    
+public class AuctionItem implements Serializable {
+
     @Id
     private int id;
-    
+
     private String subject;
-    
+
     private String description;
+
+    public AuctionItem() {
+        // GWT RPC constructor
+    }
+
+    public AuctionItem(int id, String subject, String description) {
+        this.id = id;
+        this.subject = subject;
+        this.description = description;
+    }
 
     public int getId() {
         return id;
@@ -36,6 +48,5 @@ public class AuctionItem {
     public void setDescription(String description) {
         this.description = description;
     }
-    
 
 }
