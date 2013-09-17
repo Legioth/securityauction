@@ -16,6 +16,7 @@
 		<!-- GWT needs at least java 1.5 -->
 		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<noServer>true</noServer>
 	</properties>
 
 	<dependencies>
@@ -120,6 +121,7 @@
 					<runTarget>SecurityAuction.html</runTarget>
 					<hostedWebapp>${webappDirectory}</hostedWebapp>
 					<i18nMessagesBundle>org.vaadin.securityauction.client.Messages</i18nMessagesBundle>
+					<noServer>${noServer}</noServer>					
 				</configuration>
 			</plugin>
 
