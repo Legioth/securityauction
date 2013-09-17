@@ -7,6 +7,7 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -27,8 +28,8 @@ public class SecurityAuction implements EntryPoint {
                 if ("login".equals(value)) {
                     showLoginView();
                 } else if (value.startsWith("auction/")) {
-                    int auctionId = Integer.parseInt(value.substring(0,
-                            "auction/".length()));
+                    int auctionId = Integer.parseInt(value.substring("auction/"
+                            .length()));
                     showAuctionView(auctionId);
                 } else {
                     showMainView();
@@ -79,8 +80,7 @@ public class SecurityAuction implements EntryPoint {
     }
 
     protected void showAuctionView(int auctionId) {
-        // TODO Auto-generated method stub
-
+        setCurrentView(new Label("Auction: " + auctionId));
     }
 
     protected void showLoginView() {
