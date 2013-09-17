@@ -52,7 +52,6 @@ public class LoginWidget extends Composite {
                                 errorText.setText(string);
                                 if (errorText.getParent() == null) {
                                     layout.add(errorText);
-                                    ;
                                 }
                             }
                         });
