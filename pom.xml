@@ -17,6 +17,11 @@
 		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<noServer>true</noServer>
+		
+		<jdbc.url>jdbc:h2:file:~/securityauction</jdbc.url>
+		<jdbc.username>sa</jdbc.username>
+		<jdbc.driver>org.h2.Driver</jdbc.driver>
+		<jdbc.datasource>org.h2.jdbcx.JdbcDataSource</jdbc.datasource>
 	</properties>
 
 	<dependencies>
@@ -184,9 +189,9 @@
 						<phase>install</phase>
 						<configuration>
 							<changeLogFile>src/main/resources/defaultdb.xml</changeLogFile>
-							<driver>org.h2.Driver</driver>
-							<url>jdbc:h2:file:~/securityauction</url>
-							<username>sa</username>
+							<driver>${jdbc.driver}</driver>
+							<url>${jdbc.url}</url>
+							<username>${jdbc.username}</username>
 						</configuration>
 						<goals>
 							<goal>update</goal>
@@ -199,6 +204,7 @@
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
 			</resource>
 		</resources>
 	</build>

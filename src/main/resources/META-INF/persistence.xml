@@ -9,9 +9,9 @@
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="eclipselink.logging.level" value="OFF" />
-			<property name="eclipselink.jdbc.driver" value="org.h2.Driver" />
-			<property name="eclipselink.jdbc.url" value="jdbc:h2:file:~/securityauction" />
-			<property name="eclipselink.jdbc.user" value="sa" />
+			<property name="eclipselink.jdbc.driver" value="${jdbc.driver}" />
+			<property name="eclipselink.jdbc.url" value="${jdbc.url}" />
+			<property name="eclipselink.jdbc.user" value="${jdbc.username}" />
 			<property name="eclipselink.jdbc.password" value="" />
 			<property name="eclipselink.target-database"
 				value="org.eclipse.persistence.platform.database.HSQLPlatform" />
