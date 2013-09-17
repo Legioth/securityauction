@@ -25,10 +25,10 @@
 		<dispatcher>ERROR</dispatcher>
 	</filter-mapping>
 
-	<servlet>
-		<servlet-name>AuctionService</servlet-name>
-		<servlet-class>org.vaadin.securityauction.server.AuctionServiceImpl</servlet-class>
-	</servlet>
+<!-- 	<servlet> -->
+<!-- 		<servlet-name>AuctionService</servlet-name> -->
+<!-- 		<servlet-class>org.vaadin.securityauction.server.AuctionServiceImpl</servlet-class> -->
+<!-- 	</servlet> -->
 	
 	<servlet>
 		<servlet-name>vaadinServlet</servlet-name>
@@ -39,10 +39,10 @@
 		</init-param>
 	</servlet>
 
-	<servlet-mapping>
-		<servlet-name>AuctionService</servlet-name>
-		<url-pattern>/SecurityAuction/AuctionService</url-pattern>
-	</servlet-mapping>
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>AuctionService</servlet-name> -->
+<!-- 		<url-pattern>/SecurityAuction/AuctionService</url-pattern> -->
+<!-- 	</servlet-mapping> -->
 	
 	<servlet-mapping>
 		<servlet-name>vaadinServlet</servlet-name>
