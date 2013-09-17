@@ -5,10 +5,6 @@
 	<listener>
 		<listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
 	</listener>
-	
-	<listener>
-		<listener-class>org.vaadin.securityauction.data.InitialDataInserter</listener-class>
-	</listener>
 
 	<filter>
 		<filter-name>ShiroFilter</filter-name>
