@@ -1,0 +1,18 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style type='org.vaadin.securityauction.client.AuctionView.AuctionStyle'>
+		.hidden {
+			display: none
+		}
+	</ui:style>
+	<g:HTMLPanel>
+		<h2 ui:field='subjectHeader'>
+			Loading item...
+		</h2>
+		<div ui:field='contentHolder' class="{style.hidden}">
+			<span ui:field='descriptionSpan' /> <br /> 
+			<g:Button ui:field="button" text="Bid" />
+		</div>
+	</g:HTMLPanel>
+</ui:UiBinder> 

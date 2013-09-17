@@ -32,4 +32,12 @@ public class AuctionServiceImpl extends RemoteServiceServlet implements
                 new AuctionItem(2, "My phone", "It's old"));
     }
 
+    public AuctionItem getAuctionItem(int id) {
+        if (id == 1 || id == 2) {
+            return getAuctionItems(0, 2).get(id - 1);
+        } else {
+            return null;
+        }
+    }
+
 }
