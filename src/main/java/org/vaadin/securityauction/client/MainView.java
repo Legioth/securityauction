@@ -70,6 +70,7 @@ public class MainView extends Composite {
                 final Range range = display.getVisibleRange();
                 service.getAuctionItems(range.getStart(), range.getLength(),
                         new AsyncCallback<List<AuctionItem>>() {
+                            @Override
                             public void onSuccess(List<AuctionItem> result) {
                                 updateRowData(range.getStart(), result);
                                 if (result.size() < range.getLength()) {
@@ -79,6 +80,7 @@ public class MainView extends Composite {
                                 }
                             }
 
+                            @Override
                             public void onFailure(Throwable caught) {
                                 Window.alert(caught.getMessage());
                             }

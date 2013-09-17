@@ -16,6 +16,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class AuctionServiceImpl extends RemoteServiceServlet implements
         AuctionService {
 
+    @Override
     public User authenticate(String username, String password) {
         if ("admin".equals(username) && "admin".equals(password)) {
             return new User(0, "admin");
@@ -26,12 +27,14 @@ public class AuctionServiceImpl extends RemoteServiceServlet implements
         }
     }
 
+    @Override
     public List<AuctionItem> getAuctionItems(int firstItem, int itemCount) {
         // Waiting for a database
         return Arrays.asList(new AuctionItem(1, "My soul", "It's delicious"),
                 new AuctionItem(2, "My phone", "It's old"));
     }
 
+    @Override
     public AuctionItem getAuctionItem(int id) {
         if (id == 1 || id == 2) {
             return getAuctionItems(0, 2).get(id - 1);

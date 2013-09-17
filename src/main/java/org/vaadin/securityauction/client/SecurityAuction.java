@@ -18,10 +18,12 @@ public class SecurityAuction implements EntryPoint {
     private Widget currentView;
     private Widget loginWidget;
 
+    @Override
     public void onModuleLoad() {
         bulidBaseUI();
 
         History.addValueChangeHandler(new ValueChangeHandler<String>() {
+            @Override
             public void onValueChange(ValueChangeEvent<String> event) {
                 String value = event.getValue();
                 if ("login".equals(value)) {

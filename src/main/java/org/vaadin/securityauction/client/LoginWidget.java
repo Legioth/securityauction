@@ -31,11 +31,13 @@ public class LoginWidget extends Composite {
         final TextBox username = new TextBox();
         final PasswordTextBox password = new PasswordTextBox();
         Button loginButton = new Button("Login", new ClickHandler() {
+            @Override
             public void onClick(ClickEvent event) {
                 AuctionServiceAsync service = AuctionServiceAsync.Util
                         .getInstance();
                 service.authenticate(username.getText(), password.getText(),
                         new AsyncCallback<User>() {
+                            @Override
                             public void onSuccess(User user) {
                                 if (user == null) {
                                     showErrorText("Invalid credentials");
@@ -44,6 +46,7 @@ public class LoginWidget extends Composite {
                                 }
                             }
 
+                            @Override
                             public void onFailure(Throwable caught) {
                                 showErrorText(caught.getMessage());
                             }
@@ -72,6 +75,7 @@ public class LoginWidget extends Composite {
 
         layout.add(new Label("Logged in as " + user.getUsername()));
         layout.add(new Button("Log out", new ClickHandler() {
+            @Override
             public void onClick(ClickEvent event) {
                 // TODO implement RPC
                 showLoginForm();

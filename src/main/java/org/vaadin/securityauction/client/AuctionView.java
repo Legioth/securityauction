@@ -53,10 +53,12 @@ public class AuctionView extends Composite {
 
         AuctionServiceAsync service = AuctionServiceAsync.Util.getInstance();
         service.getAuctionItem(auctionId, new AsyncCallback<AuctionItem>() {
+            @Override
             public void onSuccess(AuctionItem result) {
                 updateFields(result);
             }
 
+            @Override
             public void onFailure(Throwable caught) {
                 Window.alert(caught.getMessage());
             }
