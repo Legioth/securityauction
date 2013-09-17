@@ -1,6 +1,5 @@
 package org.vaadin.securityauction.server;
 
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
@@ -28,10 +27,11 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 @WebServlet(urlPatterns = { "/SecurityAuction/AuctionService" })
 public class AuctionServiceImpl extends RemoteServiceServlet implements
         AuctionService {
-    
+
     @PersistenceUnit
     private EntityManagerFactory factory;
 
+    @Override
     public User authenticate(String username, String password) {
         Subject currentUser = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username,
@@ -50,7 +50,7 @@ public class AuctionServiceImpl extends RemoteServiceServlet implements
             Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
             return null;
         } finally {
-            if(entityManager != null) {
+            if (entityManager != null) {
                 entityManager.close();
             }
         }
