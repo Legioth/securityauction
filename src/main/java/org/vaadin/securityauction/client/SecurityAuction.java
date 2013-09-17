@@ -26,9 +26,7 @@ public class SecurityAuction implements EntryPoint {
             @Override
             public void onValueChange(ValueChangeEvent<String> event) {
                 String value = event.getValue();
-                if ("login".equals(value)) {
-                    showLoginView();
-                } else if (value.startsWith("auction/")) {
+                if (value.startsWith("auction/")) {
                     int auctionId = Integer.parseInt(value.substring("auction/"
                             .length()));
                     showAuctionView(auctionId);
@@ -82,10 +80,5 @@ public class SecurityAuction implements EntryPoint {
 
     protected void showAuctionView(int auctionId) {
         setCurrentView(new AuctionView(auctionId));
-    }
-
-    protected void showLoginView() {
-        // TODO Auto-generated method stub
-
     }
 }
