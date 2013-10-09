@@ -17,11 +17,11 @@
 		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<noServer>true</noServer>
-		
-		<jdbc.url>jdbc:h2:file:~/securityauction</jdbc.url>
-		<jdbc.username>sa</jdbc.username>
-		<jdbc.driver>org.h2.Driver</jdbc.driver>
-		<jdbc.datasource>org.h2.jdbcx.JdbcDataSource</jdbc.datasource>
+		<jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
+		<jdbc.url>jdbc:mysql://localhost/securityauction</jdbc.url>
+		<jdbc.username>security</jdbc.username>
+		<jdbc.password>auction</jdbc.password>
+		<jdbc.datasource>com.mysql.jdbc.jdbc2.optional.MysqlDataSource</jdbc.datasource>
 	</properties>
 
 	<dependencies>
@@ -80,34 +80,29 @@
 			<groupId>org.eclipse.persistence</groupId>
 			<artifactId>eclipselink</artifactId>
 			<version>2.5.0</version>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-core</artifactId>
 			<version>1.2.2</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-				</exclusion>
-			</exclusions>
+<!-- 			<exclusions> -->
+<!-- 				<exclusion> -->
+<!-- 					<groupId>org.slf4j</groupId> -->
+<!-- 					<artifactId>slf4j-api</artifactId> -->
+<!-- 				</exclusion> -->
+<!-- 			</exclusions> -->
 		</dependency>
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-web</artifactId>
 			<version>1.2.2</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>1.3.173</version>
+<!-- 			<exclusions> -->
+<!-- 				<exclusion> -->
+<!-- 					<groupId>org.slf4j</groupId> -->
+<!-- 					<artifactId>slf4j-api</artifactId> -->
+<!-- 				</exclusion> -->
+<!-- 			</exclusions> -->
 		</dependency>
 		<dependency>
 			<groupId>javax.enterprise</groupId>
@@ -120,6 +115,11 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.0.1</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.6</version>
 		</dependency>
 	</dependencies>
 
@@ -149,7 +149,7 @@
 					<runTarget>SecurityAuction.html</runTarget>
 					<hostedWebapp>${webappDirectory}</hostedWebapp>
 					<i18nMessagesBundle>org.vaadin.securityauction.client.Messages</i18nMessagesBundle>
-					<noServer>${noServer}</noServer>					
+					<noServer>${noServer}</noServer>
 				</configuration>
 			</plugin>
 
@@ -192,6 +192,7 @@
 							<driver>${jdbc.driver}</driver>
 							<url>${jdbc.url}</url>
 							<username>${jdbc.username}</username>
+							<password>${jdbc.password}</password>
 						</configuration>
 						<goals>
 							<goal>update</goal>

@@ -28,7 +28,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class AuctionServiceImpl extends RemoteServiceServlet implements
         AuctionService {
 
-    @PersistenceUnit
+    @PersistenceUnit(unitName = "securityauction")
     private EntityManagerFactory factory;
 
     @Override
@@ -41,7 +41,7 @@ public class AuctionServiceImpl extends RemoteServiceServlet implements
             currentUser.login(token);
             entityManager = factory.createEntityManager();
             Query query = entityManager
-                    .createQuery("SELECT u FROM User u WHERE username = :username");
+                    .createQuery("SELECT u FROM User u WHERE u.username = :username");
             query.setParameter("username", username);
 
             // Execute query and return result
