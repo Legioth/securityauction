@@ -24,4 +24,45 @@
 				value="$shiro1$SHA-256$500000$BafJhmYjplioLz5cy9AddA==$UK6un1Wzmh5syKFNvxbQNbKyRdMAFeB+WzDHmOaFMfU=" />
 		</insert>
 	</changeSet>
+
+	<!-- Adding database table for auction items -->
+	<changeSet id="2" author="kim">
+		<createTable tableName="auction_item">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="subject" type="varchar(100)" />
+			<column name="description" type="varchar(3000)" />
+			<column name="user_id" type="int">
+				<constraints references="user (id)" foreignKeyName="owner_reference" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<!-- Adding a new user and auction items to both existing users -->
+	<changeSet id="3" author="kim">
+		<insert tableName="user">
+			<column name="id">2</column>
+			<column name="username" value="demo2" />
+			<column name="password"
+				value="$shiro1$SHA-256$500000$BafJhmYjplioLz5cy9AddA==$UK6un1Wzmh5syKFNvxbQNbKyRdMAFeB+WzDHmOaFMfU=" />
+		</insert>
+
+		<insert tableName="auction_item">
+			<column name="subject">iPhone 5</column>
+			<column name="description">Selling my iPhone 5, as I'm switching to Nokia
+				Lumia.
+			</column>
+			<column name="user_id">1</column>
+		</insert>
+
+		<insert tableName="auction_item">
+			<column name="subject">Honda Civic, 2003</column>
+			<column name="description">Honda Civic, registered in May 2003. Excellent
+				condition, make your bid.
+			</column>
+			<column name="user_id">2</column>
+		</insert>
+
+	</changeSet>
 </databaseChangeLog>
