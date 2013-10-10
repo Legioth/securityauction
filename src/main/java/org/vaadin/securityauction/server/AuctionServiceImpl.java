@@ -47,7 +47,7 @@ public class AuctionServiceImpl extends RemoteServiceServlet implements
             // Execute query and return result
             return (User) query.getSingleResult();
         } catch (Exception e) {
-            Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
+            Logger.getAnonymousLogger().log(Level.WARNING, e.getMessage());
             return null;
         } finally {
             if (entityManager != null) {
@@ -59,11 +59,17 @@ public class AuctionServiceImpl extends RemoteServiceServlet implements
     @Override
     public List<AuctionItem> getAuctionItems(int firstItem, int itemCount) {
         EntityManager em = factory.createEntityManager();
-        
-        Query query = em.createQuery("SELECT a FROM AuctionItem a");
-        query.setFirstResult(firstItem);
-        query.setMaxResults(itemCount);
-        return query.getResultList();
+        try {
+            Query query = em.createQuery("SELECT a FROM AuctionItem a");
+            query.setFirstResult(firstItem);
+            query.setMaxResults(itemCount);
+            return query.getResultList();
+        } catch (Exception e) {
+            Logger.getAnonymousLogger().log(Level.WARNING, e.getMessage());
+            return null;
+        } finally {
+            em.close();
+        }
     }
 
     @Override
