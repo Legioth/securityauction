@@ -1,6 +1,5 @@
 package org.vaadin.securityauction.server;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,6 +55,7 @@ public class AuctionServiceImpl extends RemoteServiceServlet implements
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<AuctionItem> getAuctionItems(int firstItem, int itemCount) {
         EntityManager em = factory.createEntityManager();
@@ -74,10 +74,15 @@ public class AuctionServiceImpl extends RemoteServiceServlet implements
 
     @Override
     public AuctionItem getAuctionItem(int id) {
-        if (id == 1 || id == 2) {
-            return getAuctionItems(0, 2).get(id - 1);
-        } else {
+        EntityManager em = factory.createEntityManager();
+        try {
+            AuctionItem item = em.find(AuctionItem.class, id);
+            return item;
+        } catch (Exception e) {
+            Logger.getAnonymousLogger().log(Level.WARNING, e.getMessage());
             return null;
+        } finally {
+            em.close();
         }
     }
 
