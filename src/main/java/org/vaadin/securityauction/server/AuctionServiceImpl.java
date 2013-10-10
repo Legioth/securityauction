@@ -58,9 +58,12 @@ public class AuctionServiceImpl extends RemoteServiceServlet implements
 
     @Override
     public List<AuctionItem> getAuctionItems(int firstItem, int itemCount) {
-        // Waiting for a database
-        return Arrays.asList(new AuctionItem(1, "My soul", "It's delicious"),
-                new AuctionItem(2, "My phone", "It's old"));
+        EntityManager em = factory.createEntityManager();
+        
+        Query query = em.createQuery("SELECT a FROM AuctionItem a");
+        query.setFirstResult(firstItem);
+        query.setMaxResults(itemCount);
+        return query.getResultList();
     }
 
     @Override
