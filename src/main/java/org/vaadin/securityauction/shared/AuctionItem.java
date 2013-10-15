@@ -1,10 +1,15 @@
 package org.vaadin.securityauction.shared;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,6 +28,10 @@ public class AuctionItem implements Serializable {
 
     @Column(name = "description")
     private String description;
+    
+    @OneToMany(fetch=FetchType.EAGER)
+    @JoinColumn(name="item_id")
+    private List<Bid> bids;
 
     public AuctionItem() {
         // GWT RPC constructor
@@ -64,6 +73,14 @@ public class AuctionItem implements Serializable {
 
     public void setOwner(int owner) {
         this.owner = owner;
+    }
+
+    public List<Bid> getBids() {
+        return bids;
+    }
+
+    public void setBids(List<Bid> bids) {
+        this.bids = bids;
     }
 
 }

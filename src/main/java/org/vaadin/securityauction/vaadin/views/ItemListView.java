@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.vaadin.securityauction.server.AuctionAdministrationService;
 import org.vaadin.securityauction.shared.AuctionItem;
+import org.vaadin.securityauction.shared.Bid;
 
 import com.vaadin.cdi.CDIView;
 import com.vaadin.data.Item;
