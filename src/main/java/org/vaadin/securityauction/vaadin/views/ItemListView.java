@@ -12,6 +12,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.fieldgroup.FieldGroup;
+import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -52,6 +53,7 @@ public class ItemListView extends VerticalSplitPanel implements View,
 
         form = new ItemEditForm();
         layout.addComponent(form);
+        layout.setVisible(false);
 
         HorizontalLayout buttonLayout = new HorizontalLayout();
         buttonLayout.addComponent(saveBtn);
@@ -76,18 +78,34 @@ public class ItemListView extends VerticalSplitPanel implements View,
     @Override
     public void valueChange(ValueChangeEvent event) {
         if (event.getProperty().getValue() != null) {
+            layout.setVisible(true);
             Item item = container.getItem(event.getProperty().getValue());
             binder.setItemDataSource(item);
             binder.bindMemberFields(form);
         } else {
-            // TODO null selection
+            layout.setVisible(false);
         }
     }
 
     @Override
     public void buttonClick(ClickEvent event) {
-        // TODO Auto-generated method stub
-
+        if(saveBtn.equals(event.getButton())) {
+            try {
+                binder.commit();
+                Object selectedItemId = table.getValue();
+                AuctionItem item = auctionService.saveAuctionItem(container.getItem(selectedItemId).getBean());
+                int index = container.indexOfId(selectedItemId);
+                container.removeItem(selectedItemId);
+                container.addItemAt(index, item);
+                table.select(null);
+            } catch (CommitException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        } else {
+            binder.discard();
+            table.select(null);
+        }
     }
 
 }
