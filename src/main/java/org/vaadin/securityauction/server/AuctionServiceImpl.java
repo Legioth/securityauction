@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.vaadin.securityauction.shared.AuctionItem;
 import org.vaadin.securityauction.shared.AuctionService;
@@ -44,7 +45,12 @@ public class AuctionServiceImpl extends RemoteServiceServlet implements
             query.setParameter("username", username);
 
             // Execute query and return result
-            return (User) query.getSingleResult();
+            User user = (User) query.getSingleResult();
+
+            Session session = currentUser.getSession();
+            session.setAttribute("userID", user.getId());
+
+            return user;
         } catch (Exception e) {
             Logger.getAnonymousLogger().log(Level.WARNING, e.getMessage());
             return null;
