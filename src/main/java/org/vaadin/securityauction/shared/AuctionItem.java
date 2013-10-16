@@ -10,10 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="auction_item")
+@Table(name = "auction_item")
 public class AuctionItem implements Serializable {
 
     @Id
@@ -28,9 +30,10 @@ public class AuctionItem implements Serializable {
 
     @Column(name = "description")
     private String description;
-    
-    @OneToMany(fetch=FetchType.EAGER)
-    @JoinColumn(name="item_id")
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "item_id")
+    @OrderBy(value="amount DESC")
     private List<Bid> bids;
 
     public AuctionItem() {
@@ -81,6 +84,23 @@ public class AuctionItem implements Serializable {
 
     public void setBids(List<Bid> bids) {
         this.bids = bids;
+    }
+
+    public float getHighestBid() {
+        List<Bid> bids = getBids();
+        if (bids == null || bids.size() == 0) {
+            return 0;
+        }
+
+        float highestBid = 0;
+        for (Bid bid : bids) {
+            if (!BidType.AUTOBID.equals(bid.getAmount())
+                    && bid.getAmount() > highestBid) {
+                highestBid = bid.getAmount();
+            }
+        }
+
+        return highestBid;
     }
 
 }

@@ -7,7 +7,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,8 +27,9 @@ public class Bid implements Serializable {
     @Column(name = "amount")
     private float amount;
 
-    @Column(name = "bidder")
-    private int bidder;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "bidder")
+    private User bidder;
 
     @Column(name = "item_id")
     private int itemId;
@@ -54,11 +58,11 @@ public class Bid implements Serializable {
         this.amount = amount;
     }
 
-    public int getBidder() {
+    public User getBidder() {
         return bidder;
     }
 
-    public void setBidder(int bidder) {
+    public void setBidder(User bidder) {
         this.bidder = bidder;
     }
 
@@ -68,6 +72,14 @@ public class Bid implements Serializable {
 
     public void setItemId(int itemId) {
         this.itemId = itemId;
+    }
+
+    public Date getBidTime() {
+        return bidTime;
+    }
+
+    public void setBidTime(Date bidTime) {
+        this.bidTime = bidTime;
     }
 
 }
