@@ -98,4 +98,28 @@
 			<column name="bid_type">NORMAL</column>
 		</insert>
 	</changeSet>
+	
+	<changeSet id="6" author="kim">
+		<createTable tableName="user_role">
+			<column name="role" type="varchar(100)" />
+			<column name="user_id" type="int">
+				<constraints references="user (id)" foreignKeyName="user_reference" deleteCascade="true" />
+			</column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="7" author="kim">
+		<insert tableName="user_role">
+			<column name="user_id">1</column>
+			<column name="role">NORMAL</column>
+		</insert>
+		<insert tableName="user_role">
+			<column name="user_id">1</column>
+			<column name="role">ADMIN</column>
+		</insert>
+		<insert tableName="user_role">
+			<column name="user_id">2</column>
+			<column name="role">NORMAL</column>
+		</insert>
+	</changeSet>
 </databaseChangeLog>
