@@ -74,8 +74,10 @@ public class ItemListView extends VerticalSplitPanel implements View,
         bidsContainer.addContainerProperty("date", String.class, null);
         bidsContainer.addContainerProperty("amount", String.class, null);
         bidsContainer.addContainerProperty("user", String.class, null);
+        bidsContainer.addContainerProperty("type", String.class, null);
         bidsTable.setContainerDataSource(bidsContainer);
         bidsTable.setSizeFull();
+        bidsTable.setSortEnabled(false);
         layout.addComponent(bidsTable);
         layout.setExpandRatio(bidsTable, 1);
 
@@ -128,6 +130,7 @@ public class ItemListView extends VerticalSplitPanel implements View,
                 item.getItemProperty("date").setValue(dateFormat.format(bid.getBidTime()));
                 item.getItemProperty("amount").setValue(moneyFormat.format(bid.getAmount()));
                 item.getItemProperty("user").setValue(bid.getBidder().getUsername());
+                item.getItemProperty("type").setValue(bid.getBidType().name());
             }
         }
         

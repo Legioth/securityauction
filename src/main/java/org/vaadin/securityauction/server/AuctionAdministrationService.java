@@ -28,32 +28,37 @@ public class AuctionAdministrationService implements Serializable {
     public AuctionItem saveAuctionItem(AuctionItem item) {
         EntityManager em = factory.createEntityManager();
         try {
-            if (item.getId() == 0) {
+            em.getTransaction().begin();
+            if (item.getId() == null) {
                 em.persist(item);
+                em.flush();
                 return item;
             } else {
                 item = em.merge(item);
+                em.flush();
                 return item;
             }
         } catch (Exception e) {
             Logger.getAnonymousLogger().log(Level.WARNING, e.getMessage());
             return null;
         } finally {
+            em.getTransaction().commit();
             em.close();
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     public List<AuctionItem> getAuctionItems() {
         Session session = SecurityUtils.getSubject().getSession();
         Integer userId = (Integer) session.getAttribute("userID");
-        if(userId == null) {
+        if (userId == null) {
             throw new RuntimeException("You are not logged in");
         }
-        
+
         EntityManager em = factory.createEntityManager();
         try {
-            Query query = em.createQuery("SELECT a FROM AuctionItem a WHERE a.owner = :owner");
+            Query query = em
+                    .createQuery("SELECT a FROM AuctionItem a WHERE a.owner = :owner");
             query.setParameter("owner", userId);
             return query.getResultList();
         } catch (Exception e) {

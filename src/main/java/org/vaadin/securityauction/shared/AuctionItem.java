@@ -20,7 +20,7 @@ public class AuctionItem implements Serializable {
 
     @Id
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Column(name = "user_id")
     private int owner;
@@ -46,7 +46,7 @@ public class AuctionItem implements Serializable {
         this.description = description;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

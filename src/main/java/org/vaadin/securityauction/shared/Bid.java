@@ -22,7 +22,7 @@ public class Bid implements Serializable {
 
     @Id
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Column(name = "amount")
     private float amount;
@@ -42,7 +42,7 @@ public class Bid implements Serializable {
     @Enumerated(EnumType.STRING)
     private BidType bidType;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -80,6 +80,14 @@ public class Bid implements Serializable {
 
     public void setBidTime(Date bidTime) {
         this.bidTime = bidTime;
+    }
+
+    public BidType getBidType() {
+        return bidType;
+    }
+
+    public void setBidType(BidType bidType) {
+        this.bidType = bidType;
     }
 
 }
