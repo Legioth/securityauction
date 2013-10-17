@@ -44,10 +44,6 @@ public class UserService implements Serializable{
 
     @SuppressWarnings("unchecked")
     public List<User> getUsers() {
-        if (!SecurityUtils.getSubject().hasRole("ADMIN")) {
-            throw new RuntimeException("You are not allowed to perform this action");
-        }
-
         EntityManager em = factory.createEntityManager();
         try {
             Query query = em

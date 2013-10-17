@@ -1,6 +1,5 @@
 package org.vaadin.securityauction.vaadin.views;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.inject.Inject;
@@ -9,7 +8,6 @@ import org.vaadin.securityauction.server.UserService;
 import org.vaadin.securityauction.shared.User;
 
 import com.vaadin.cdi.CDIView;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 
 @CDIView("admin")
