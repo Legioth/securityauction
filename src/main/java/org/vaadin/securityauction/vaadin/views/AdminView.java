@@ -1,22 +1,46 @@
 package org.vaadin.securityauction.vaadin.views;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.inject.Inject;
+
+import org.vaadin.securityauction.server.UserService;
+import org.vaadin.securityauction.shared.User;
+
 import com.vaadin.cdi.CDIView;
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Layout;
 
 @CDIView("admin")
-public class AdminView extends HorizontalLayout implements View{
+public class AdminView extends AbstractCRUDView<User> {
     
-    public AdminView() {
-        addComponent(new Label("Placeholder"));
+    @Inject
+    private UserService userService;
+
+    @Override
+    protected Class<User> getBeanType() {
+        return User.class;
     }
 
     @Override
-    public void enter(ViewChangeEvent event) {
-        // TODO Auto-generated method stub
-        
+    protected Object[] getVisibleColumns() {
+        return new Object[] { "username" };
+    }
+
+    @Override
+    protected Collection<User> getBeans() {
+        return userService.getUsers();
+    }
+
+    @Override
+    protected Layout createForm() {
+        return new UserForm();
+    }
+
+    @Override
+    protected User saveBean(User user) {
+        return userService.saveUser(user);
     }
 
 }
