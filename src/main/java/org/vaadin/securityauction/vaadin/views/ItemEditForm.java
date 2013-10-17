@@ -17,12 +17,14 @@ public class ItemEditForm extends FormLayout {
     public ItemEditForm() {
         
         subject = new TextField("Subject");
+        subject.setNullRepresentation("");
         subject.setWidth(30, Unit.EM);
         addComponent(subject);
 
         description = new TextArea("Description");
         description.setWidth("100%");
         description.setHeight("170px");
+        description.setNullRepresentation("");
         addComponent(description);
     }
 

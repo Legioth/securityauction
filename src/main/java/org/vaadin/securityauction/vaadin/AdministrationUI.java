@@ -15,6 +15,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -28,7 +29,7 @@ public class AdministrationUI extends UI {
     
     private HorizontalLayout layout = new HorizontalLayout();
 
-    private VerticalLayout buttonLayout;
+    private CssLayout buttonLayout;
     
     private ViewDisplay viewDisplay = new ViewDisplay() {
         
@@ -52,9 +53,10 @@ public class AdministrationUI extends UI {
         layout.setSizeFull();
         setContent(layout);
         
-        buttonLayout = new VerticalLayout();
+        buttonLayout = new CssLayout();
         buttonLayout.setWidth("150px");
         createButton("My items", "");
+        createButton("+", "/new");
         
         if(SecurityUtils.getSubject().hasRole("ADMIN")) {
             createButton("Administration", "admin");

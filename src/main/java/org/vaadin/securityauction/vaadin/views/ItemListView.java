@@ -7,6 +7,7 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
+import org.apache.shiro.SecurityUtils;
 import org.vaadin.securityauction.server.AuctionAdministrationService;
 import org.vaadin.securityauction.shared.AuctionItem;
 import org.vaadin.securityauction.shared.Bid;
@@ -16,6 +17,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.IndexedContainer;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.Table;
 
@@ -43,14 +45,11 @@ public class ItemListView extends AbstractCRUDView<AuctionItem> {
     }
 
     @Override
-    public void valueChange(ValueChangeEvent event) {
-        super.valueChange(event);
-        if (event.getProperty().getValue() != null) {
-            BeanItem<AuctionItem> item = container.getItem(event.getProperty()
-                    .getValue());
+    protected void showInForm(BeanItem<AuctionItem> item) {
+        super.showInForm(item);
+        if(item != null) {            
             populateBids(item.getBean());
         }
-
     }
 
     @SuppressWarnings("unchecked")
@@ -98,6 +97,18 @@ public class ItemListView extends AbstractCRUDView<AuctionItem> {
     @Override
     protected Layout createForm() {
         return new ItemEditForm();
+    }
+
+    @Override
+    public void enter(ViewChangeEvent event) {
+        super.enter(event);
+        if ("new".equals(event.getParameters())) {
+            int userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userID");
+            AuctionItem bean = new AuctionItem();
+            bean.setOwner(userId);
+            BeanItem<AuctionItem> item = new BeanItem<AuctionItem>(bean);
+            showInForm(item);
+        }
     }
 
 }

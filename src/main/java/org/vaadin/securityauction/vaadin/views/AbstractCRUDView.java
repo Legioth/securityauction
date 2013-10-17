@@ -19,8 +19,8 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalSplitPanel;
 import com.vaadin.ui.themes.Reindeer;
 
-public abstract class AbstractCRUDView<BEANTYPE> extends VerticalSplitPanel implements
-        View, ValueChangeListener, ClickListener {
+public abstract class AbstractCRUDView<BEANTYPE> extends VerticalSplitPanel
+        implements View, ValueChangeListener, ClickListener {
 
     private Table table;
 
@@ -35,7 +35,7 @@ public abstract class AbstractCRUDView<BEANTYPE> extends VerticalSplitPanel impl
     private Button cancelBtn = new Button("Cancel", this);
 
     private FieldGroup binder = new FieldGroup();
-    
+
     public AbstractCRUDView() {
         table = new Table();
         table.setSizeFull();
@@ -64,13 +64,13 @@ public abstract class AbstractCRUDView<BEANTYPE> extends VerticalSplitPanel impl
         table.addValueChangeListener(this);
         table.setImmediate(true);
     }
-    
+
     protected abstract Class<BEANTYPE> getBeanType();
-    
+
     protected abstract Object[] getVisibleColumns();
-    
+
     protected abstract Collection<BEANTYPE> getBeans();
-    
+
     protected abstract Layout createForm();
 
     @Override
@@ -78,34 +78,53 @@ public abstract class AbstractCRUDView<BEANTYPE> extends VerticalSplitPanel impl
         Collection<BEANTYPE> beans = getBeans();
         container.removeAllItems();
         container.addAll(beans);
+        table.select(null);
     }
 
     @Override
     public void valueChange(ValueChangeEvent event) {
         if (event.getProperty().getValue() != null) {
+            BeanItem<BEANTYPE> item = container.getItem(event.getProperty()
+                    .getValue());
+            showInForm(item);
+        } else {
+            showInForm(null);
+        }
+
+    }
+
+    protected void showInForm(BeanItem<BEANTYPE> item) {
+        if (item != null) {
             layout.setVisible(true);
-            BeanItem<BEANTYPE> item = container.getItem(event.getProperty().getValue());
             binder.setItemDataSource(item);
             binder.bindMemberFields(form);
         } else {
             layout.setVisible(false);
         }
     }
-    
+
     protected abstract BEANTYPE saveBean(BEANTYPE bean);
 
+    @SuppressWarnings("unchecked")
     @Override
     public void buttonClick(ClickEvent event) {
         if (saveBtn.equals(event.getButton())) {
             try {
                 binder.commit();
+                BeanItem<BEANTYPE> beanItem = (BeanItem<BEANTYPE>) binder
+                        .getItemDataSource();
+                BEANTYPE item = saveBean(beanItem.getBean());
+
                 Object selectedItemId = table.getValue();
-                BEANTYPE item = saveBean(container
-                        .getItem(selectedItemId).getBean());
-                int index = container.indexOfId(selectedItemId);
-                container.removeItem(selectedItemId);
-                container.addItemAt(index, item);
+                if (selectedItemId != null) {
+                    int index = container.indexOfId(selectedItemId);
+                    container.removeItem(selectedItemId);
+                    container.addItemAt(index, item);
+                } else {
+                    container.addItem(item);
+                }
                 table.select(null);
+                showInForm(null);
             } catch (CommitException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -115,5 +134,4 @@ public abstract class AbstractCRUDView<BEANTYPE> extends VerticalSplitPanel impl
             table.select(null);
         }
     }
-
 }
