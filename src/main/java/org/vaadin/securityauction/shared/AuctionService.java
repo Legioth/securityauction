@@ -1,5 +1,6 @@
 package org.vaadin.securityauction.shared;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -16,5 +17,5 @@ public interface AuctionService extends RemoteService {
 
     public AuctionItem getAuctionItem(int id);
 
-    public void bid(int auctionItemId, float amount, BidType bidType);
+    public void bid(int auctionItemId, float amount, BidType bidType, Date bidTime);
 }

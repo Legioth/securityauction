@@ -1,5 +1,6 @@
 package org.vaadin.securityauction.server;
 
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -102,9 +103,10 @@ public class AuctionServiceImpl extends RemoteServiceServlet implements
     }
 
     @Override
-    public void bid(int auctionItemId, float amount, BidType bidType) {
+    public void bid(int auctionItemId, float amount, BidType bidType,
+            Date bidTime) {
         System.out.println("Got " + amount + "€ bid for " + auctionItemId
-                + " with type " + bidType);
+                + " with type " + bidType + " and time " + bidTime);
     }
 
 }
