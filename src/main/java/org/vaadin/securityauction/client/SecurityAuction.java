@@ -1,5 +1,7 @@
 package org.vaadin.securityauction.client;
 
+import org.vaadin.securityauction.shared.User;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -17,6 +19,7 @@ public class SecurityAuction implements EntryPoint {
     private DockLayoutPanel dock;
     private Widget currentView;
     private Widget loginWidget;
+    private User user;
 
     @Override
     public void onModuleLoad() {
@@ -54,7 +57,7 @@ public class SecurityAuction implements EntryPoint {
 
     private Widget getLoginWidget() {
         if (loginWidget == null) {
-            loginWidget = new LoginWidget();
+            loginWidget = new LoginWidget(this);
 
         }
 
@@ -79,6 +82,14 @@ public class SecurityAuction implements EntryPoint {
     }
 
     protected void showAuctionView(int auctionId) {
-        setCurrentView(new AuctionView(auctionId));
+        setCurrentView(new AuctionView(this, auctionId));
+    }
+
+    public void setCurrentUser(User user) {
+        this.user = user;
+    }
+
+    public User getCurrentUser() {
+        return user;
     }
 }

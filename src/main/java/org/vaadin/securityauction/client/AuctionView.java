@@ -2,11 +2,15 @@ package org.vaadin.securityauction.client;
 
 import org.vaadin.securityauction.shared.AuctionItem;
 import org.vaadin.securityauction.shared.AuctionServiceAsync;
+import org.vaadin.securityauction.shared.BidType;
+import org.vaadin.securityauction.shared.User;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.HeadingElement;
 import com.google.gwt.dom.client.SpanElement;
+import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -16,6 +20,8 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 public class AuctionView extends Composite {
@@ -45,11 +51,36 @@ public class AuctionView extends Composite {
     @UiField
     SpanElement descriptionSpan;
 
+    @UiField
+    DivElement bidBox;
+
+    @UiField
+    ListBox typeBox;
+
+    @UiField
+    TextBox amountBox;
+
     private int auctionId;
 
-    public AuctionView(int auctionId) {
+    private SecurityAuction auction;
+
+    public AuctionView(SecurityAuction auction, int auctionId) {
+        this.auction = auction;
         this.auctionId = auctionId;
         initWidget(uiBinder.createAndBindUi(this));
+
+        User user = auction.getCurrentUser();
+        if (user == null) {
+            bidBox.getStyle().setDisplay(Display.NONE);
+        } else {
+            BidType[] values = BidType.values();
+            for (BidType bidType : values) {
+                if (bidType.isAllowedWithRoles(user.getRoles())) {
+                    typeBox.addItem(bidType.toString(), bidType.name());
+                }
+            }
+            typeBox.setSelectedIndex(0);
+        }
 
         AuctionServiceAsync service = AuctionServiceAsync.Util.getInstance();
         service.getAuctionItem(auctionId, new AsyncCallback<AuctionItem>() {
@@ -75,9 +106,39 @@ public class AuctionView extends Composite {
         }
     }
 
+    @UiHandler("typeBox")
+    void onTypeChange(ChangeEvent e) {
+        BidType bidType = getSelectedBidType();
+
+        if (bidType == BidType.POSTPONED) {
+            Window.alert("Sorry, this is not implemented right now");
+            typeBox.setSelectedIndex(0);
+        }
+    }
+
+    private BidType getSelectedBidType() {
+        return BidType.valueOf(typeBox.getValue(typeBox.getSelectedIndex()));
+    }
+
     @UiHandler("button")
     void onClick(ClickEvent e) {
-        Window.alert("Hello!");
+        BidType bidType = getSelectedBidType();
+        float amount = Float.parseFloat(amountBox.getValue());
+
+        AuctionServiceAsync service = AuctionServiceAsync.Util.getInstance();
+        service.bid(auctionId, amount, bidType, null,
+                new AsyncCallback<Void>() {
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        Window.alert("Bid failed: " + caught.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(Void result) {
+                        Window.alert("Thank you for bidding");
+                    }
+                });
+
     }
 
 }

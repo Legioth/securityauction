@@ -12,7 +12,12 @@
 		</h2>
 		<div ui:field='contentHolder' class="{style.hidden}">
 			<span ui:field='descriptionSpan' /> <br /> 
-			<g:Button ui:field="button" text="Bid" />
+			<div ui:field="bidBox">
+				<h3>Make a bid</h3>
+				<g:ListBox ui:field="typeBox"></g:ListBox>
+				<g:TextBox ui:field="amountBox"></g:TextBox>
+				<g:Button ui:field="button" text="Bid" />
+			</div>
 		</div>
 	</g:HTMLPanel>
 </ui:UiBinder> 

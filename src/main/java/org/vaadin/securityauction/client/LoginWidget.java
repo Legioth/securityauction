@@ -17,9 +17,10 @@ import com.google.gwt.user.client.ui.TextBox;
 
 public class LoginWidget extends Composite {
     SimplePanel content = new SimplePanel();
-    private User user;
+    private SecurityAuction auction;
 
-    public LoginWidget() {
+    public LoginWidget(SecurityAuction auction) {
+        this.auction = auction;
         initWidget(content);
         showLoginForm();
     }
@@ -70,7 +71,7 @@ public class LoginWidget extends Composite {
     }
 
     private void setLoggedIn(User user) {
-        this.user = user;
+        auction.setCurrentUser(user);
 
         FlowPanel layout = new FlowPanel();
 
