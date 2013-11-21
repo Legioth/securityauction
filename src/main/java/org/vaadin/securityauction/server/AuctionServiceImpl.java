@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -17,6 +18,7 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.vaadin.securityauction.shared.AuctionItem;
 import org.vaadin.securityauction.shared.AuctionService;
+import org.vaadin.securityauction.shared.Bid;
 import org.vaadin.securityauction.shared.BidType;
 import org.vaadin.securityauction.shared.User;
 
@@ -32,6 +34,9 @@ public class AuctionServiceImpl extends RemoteServiceServlet implements
 
     @PersistenceUnit(unitName = "securityauction")
     private EntityManagerFactory factory;
+
+    @Inject
+    private UserService userService;
 
     @Override
     public User authenticate(String username, String password) {
@@ -76,7 +81,8 @@ public class AuctionServiceImpl extends RemoteServiceServlet implements
     public List<AuctionItem> getAuctionItems(int firstItem, int itemCount) {
         EntityManager em = factory.createEntityManager();
         try {
-            Query query = em.createQuery("SELECT a FROM AuctionItem a WHERE a.closeDate > CURRENT_DATE");
+            Query query = em
+                    .createQuery("SELECT a FROM AuctionItem a WHERE a.closeDate > CURRENT_DATE");
             query.setFirstResult(firstItem);
             query.setMaxResults(itemCount);
             return query.getResultList();
@@ -105,8 +111,34 @@ public class AuctionServiceImpl extends RemoteServiceServlet implements
     @Override
     public void bid(int auctionItemId, float amount, BidType bidType,
             Date bidTime) {
-        System.out.println("Got " + amount + "€ bid for " + auctionItemId
-                + " with type " + bidType + " and time " + bidTime);
+        User user = userService.getCurrentUser();
+        if (user == null) {
+            return;
+        }
+
+        EntityManager em = factory.createEntityManager();
+        try {
+            AuctionItem item = em.find(AuctionItem.class, auctionItemId);
+            if (item != null) {
+                Bid bid = new Bid();
+                bid.setAmount(amount);
+                bid.setBidType(bidType);
+                if (bidTime == null) {
+                    bidTime = new Date();
+                }
+
+                bid.setBidTime(bidTime);
+                bid.setItemId(item.getId());
+                bid.setBidder(user);
+                item.getBids().add(bid);
+                em.persist(bid);
+            }
+
+        } catch (Exception e) {
+            Logger.getAnonymousLogger().log(Level.WARNING, e.getMessage());
+        } finally {
+            em.close();
+        }
     }
 
 }

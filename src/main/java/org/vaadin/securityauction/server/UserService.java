@@ -15,11 +15,11 @@ import org.apache.shiro.session.Session;
 import org.vaadin.securityauction.shared.AuctionItem;
 import org.vaadin.securityauction.shared.User;
 
-public class UserService implements Serializable{
-    
+public class UserService implements Serializable {
+
     @PersistenceUnit(unitName = "securityauction")
     private EntityManagerFactory factory;
-    
+
     public User saveUser(User user) {
         EntityManager em = factory.createEntityManager();
         try {
@@ -56,6 +56,25 @@ public class UserService implements Serializable{
             em.close();
         }
 
+    }
+
+    public User getCurrentUser() {
+        Integer userId = (Integer) SecurityUtils.getSubject().getSession()
+                .getAttribute("userID");
+        if (userId == null) {
+            return null;
+        }
+
+        EntityManager em = factory.createEntityManager();
+        try {
+            User user = em.find(User.class, userId);
+            return user;
+        } catch (Exception e) {
+            Logger.getAnonymousLogger().log(Level.WARNING, e.getMessage());
+            return null;
+        } finally {
+            em.close();
+        }
     }
 
 }
