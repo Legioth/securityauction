@@ -24,26 +24,6 @@ public class LoginWidget extends Composite {
     public LoginWidget(SecurityAuction auction) {
         this.auction = auction;
         initWidget(content);
-        
-        AuctionServiceAsync service = AuctionServiceAsync.Util
-                .getInstance();
-        service.getCurrentUser(new AsyncCallback<User>() {
-            
-            @Override
-            public void onSuccess(User result) {
-                if(result == null) {
-                    showLoginForm();
-                } else {
-                    setLoggedIn(result);
-                }
-            }
-            
-            @Override
-            public void onFailure(Throwable caught) {
-                showLoginForm();
-                showErrorText(caught.getMessage());
-            }
-        });
     }
 
     private void showLoginForm() {
@@ -74,7 +54,6 @@ public class LoginWidget extends Composite {
                                 showErrorText(caught.getMessage());
                             }
 
-                            
                         });
             }
         });
@@ -85,7 +64,7 @@ public class LoginWidget extends Composite {
 
         content.setWidget(layout);
     }
-    
+
     private void showErrorText(String string) {
         errorText.setText(string);
         if (errorText.getParent() == null) {
@@ -96,28 +75,37 @@ public class LoginWidget extends Composite {
     private void setLoggedIn(User user) {
         auction.setCurrentUser(user);
 
-        FlowPanel layout = new FlowPanel();
+        updateUI(user);
+    }
 
-        layout.add(new Label("Logged in as " + user.getUsername()));
-        layout.add(new Button("Log out", new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent event) {
-                AuctionServiceAsync service = AuctionServiceAsync.Util
-                        .getInstance();
-                service.logout(new AsyncCallback<Void>() {
-                    @Override
-                    public void onSuccess(Void result) {
-                        showLoginForm();
-                    }
+    public void updateUI(User user) {
+        if (user == null) {
+            showLoginForm();
+        } else {
+            FlowPanel layout = new FlowPanel();
 
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        Window.alert(caught.getMessage());
-                    }
-                });
-            }
-        }));
+            layout.add(new Label("Logged in as " + user.getUsername()));
+            layout.add(new Button("Log out", new ClickHandler() {
+                @Override
+                public void onClick(ClickEvent event) {
+                    AuctionServiceAsync service = AuctionServiceAsync.Util
+                            .getInstance();
+                    service.logout(new AsyncCallback<Void>() {
+                        @Override
+                        public void onSuccess(Void result) {
+                            auction.setCurrentUser(null);
+                            showLoginForm();
+                        }
 
-        content.setWidget(layout);
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            Window.alert(caught.getMessage());
+                        }
+                    });
+                }
+            }));
+            content.setWidget(layout);
+        }
+
     }
 }
