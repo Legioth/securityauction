@@ -118,6 +118,7 @@ public class AuctionServiceImpl extends RemoteServiceServlet implements
 
         EntityManager em = factory.createEntityManager();
         try {
+            em.getTransaction().begin();
             AuctionItem item = em.find(AuctionItem.class, auctionItemId);
             if (item != null) {
                 Bid bid = new Bid();
@@ -131,12 +132,14 @@ public class AuctionServiceImpl extends RemoteServiceServlet implements
                 bid.setItemId(item.getId());
                 bid.setBidder(user);
                 item.getBids().add(bid);
-                em.persist(bid);
+                item = em.merge(item);
+                em.flush();
             }
 
         } catch (Exception e) {
             Logger.getAnonymousLogger().log(Level.WARNING, e.getMessage());
         } finally {
+            em.getTransaction().commit();
             em.close();
         }
     }
