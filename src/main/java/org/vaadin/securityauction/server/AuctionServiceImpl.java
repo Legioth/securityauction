@@ -76,7 +76,7 @@ public class AuctionServiceImpl extends RemoteServiceServlet implements
     public List<AuctionItem> getAuctionItems(int firstItem, int itemCount) {
         EntityManager em = factory.createEntityManager();
         try {
-            Query query = em.createQuery("SELECT a FROM AuctionItem a");
+            Query query = em.createQuery("SELECT a FROM AuctionItem a WHERE a.closeDate > CURRENT_DATE");
             query.setFirstResult(firstItem);
             query.setMaxResults(itemCount);
             return query.getResultList();

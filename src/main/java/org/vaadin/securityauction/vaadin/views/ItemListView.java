@@ -2,7 +2,9 @@ package org.vaadin.securityauction.vaadin.views;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -14,7 +16,6 @@ import org.vaadin.securityauction.shared.Bid;
 
 import com.vaadin.cdi.CDIView;
 import com.vaadin.data.Item;
-import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -47,7 +48,7 @@ public class ItemListView extends AbstractCRUDView<AuctionItem> {
     @Override
     protected void showInForm(BeanItem<AuctionItem> item) {
         super.showInForm(item);
-        if(item != null) {            
+        if (item != null) {
             populateBids(item.getBean());
         }
     }
@@ -81,7 +82,7 @@ public class ItemListView extends AbstractCRUDView<AuctionItem> {
 
     @Override
     protected Object[] getVisibleColumns() {
-        return new Object[] { "subject", "description", "highestBid" };
+        return new Object[] { "subject", "description", "highestBid", "closeDate" };
     }
 
     @Override
@@ -103,9 +104,14 @@ public class ItemListView extends AbstractCRUDView<AuctionItem> {
     public void enter(ViewChangeEvent event) {
         super.enter(event);
         if ("new".equals(event.getParameters())) {
-            int userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userID");
+            int userId = (Integer) SecurityUtils.getSubject().getSession()
+                    .getAttribute("userID");
             AuctionItem bean = new AuctionItem();
             bean.setOwner(userId);
+
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DATE, 7);
+            bean.setCloseDate(cal.getTime());
             BeanItem<AuctionItem> item = new BeanItem<AuctionItem>(bean);
             showInForm(item);
         }

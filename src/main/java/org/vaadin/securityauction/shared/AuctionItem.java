@@ -1,6 +1,7 @@
 package org.vaadin.securityauction.shared;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -13,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "auction_item")
@@ -36,6 +39,10 @@ public class AuctionItem implements Serializable {
     @JoinColumn(name = "item_id")
     @OrderBy(value="amount DESC")
     private List<Bid> bids;
+    
+    @Column(name = "close_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date closeDate;
 
     public AuctionItem() {
         // GWT RPC constructor
@@ -102,6 +109,14 @@ public class AuctionItem implements Serializable {
         }
 
         return highestBid;
+    }
+
+    public Date getCloseDate() {
+        return closeDate;
+    }
+
+    public void setCloseDate(Date closeDate) {
+        this.closeDate = closeDate;
     }
 
 }
