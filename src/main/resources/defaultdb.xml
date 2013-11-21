@@ -122,4 +122,16 @@
 			<column name="role">NORMAL</column>
 		</insert>
 	</changeSet>
+	
+	<changeSet id="8" author="kim">
+		<addColumn tableName="auction_item">
+			<column name="close_date" type="datetime"></column>
+		</addColumn>
+	</changeSet>
+	
+	<changeSet id="9" author="kim">
+		<update tableName="auction_item">
+			<column name="close_date">2013-12-02</column>
+		</update>
+	</changeSet>
 </databaseChangeLog>
