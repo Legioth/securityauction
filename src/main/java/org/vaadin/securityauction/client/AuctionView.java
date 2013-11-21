@@ -2,12 +2,16 @@ package org.vaadin.securityauction.client;
 
 import org.vaadin.securityauction.shared.AuctionItem;
 import org.vaadin.securityauction.shared.AuctionServiceAsync;
+import org.vaadin.securityauction.shared.Bid;
 import org.vaadin.securityauction.shared.BidType;
 import org.vaadin.securityauction.shared.User;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.HeadingElement;
+import com.google.gwt.dom.client.LIElement;
+import com.google.gwt.dom.client.OListElement;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -60,6 +64,9 @@ public class AuctionView extends Composite {
     @UiField
     TextBox amountBox;
 
+    @UiField
+    OListElement bidList;
+
     private int auctionId;
 
     private SecurityAuction auction;
@@ -101,6 +108,23 @@ public class AuctionView extends Composite {
             subjectHeader.setInnerText(result.getSubject());
             descriptionSpan.setInnerText(result.getDescription());
             contentHolder.removeClassName(style.hidden());
+
+            for (int i = 0; i < bidList.getChildCount(); i++) {
+                bidList.getChild(0).removeFromParent();
+            }
+
+            for (Bid bid : result.getBids()) {
+                LIElement li = Document.get().createLIElement();
+                li.setInnerText(bid.getAmount() + "€ - " + bid.getBidTime());
+                bidList.appendChild(li);
+            }
+
+            if (bidList.getChildCount() == 0) {
+                LIElement li = Document.get().createLIElement();
+                li.setInnerText("No bids yet");
+                bidList.appendChild(li);
+            }
+
         } else {
             subjectHeader.setInnerText("Auction item not found");
         }

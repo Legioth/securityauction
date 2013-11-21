@@ -11,7 +11,13 @@
 			Loading item...
 		</h2>
 		<div ui:field='contentHolder' class="{style.hidden}">
-			<span ui:field='descriptionSpan' /> <br /> 
+			<span ui:field='descriptionSpan' />
+			<br />
+			<div>
+				<h3>Last bids</h3>
+				<ol ui:field="bidList">
+				</ol>
+			</div>
 			<div ui:field="bidBox">
 				<h3>Make a bid</h3>
 				<g:ListBox ui:field="typeBox"></g:ListBox>
