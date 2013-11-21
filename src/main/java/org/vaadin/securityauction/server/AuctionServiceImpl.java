@@ -63,6 +63,14 @@ public class AuctionServiceImpl extends RemoteServiceServlet implements
 
     @SuppressWarnings("unchecked")
     @Override
+    public void logout() {
+        Subject currentUser = SecurityUtils.getSubject();
+        if (currentUser != null) {
+            currentUser.logout();
+        }
+    }
+
+    @Override
     public List<AuctionItem> getAuctionItems(int firstItem, int itemCount) {
         EntityManager em = factory.createEntityManager();
         try {

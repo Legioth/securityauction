@@ -10,6 +10,8 @@ import com.google.gwt.user.client.rpc.RemoteService;
 public interface AuctionService extends RemoteService {
     public User authenticate(String username, String password);
 
+    public void logout();
+
     public List<AuctionItem> getAuctionItems(int firstItem, int itemCount);
 
     public AuctionItem getAuctionItem(int id);

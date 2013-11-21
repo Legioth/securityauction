@@ -5,6 +5,7 @@ import org.vaadin.securityauction.shared.User;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -77,8 +78,19 @@ public class LoginWidget extends Composite {
         layout.add(new Button("Log out", new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
-                // TODO implement RPC
-                showLoginForm();
+                AuctionServiceAsync service = AuctionServiceAsync.Util
+                        .getInstance();
+                service.logout(new AsyncCallback<Void>() {
+                    @Override
+                    public void onSuccess(Void result) {
+                        showLoginForm();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        Window.alert(caught.getMessage());
+                    }
+                });
             }
         }));
 
