@@ -15,4 +15,6 @@ public interface AuctionService extends RemoteService {
     public List<AuctionItem> getAuctionItems(int firstItem, int itemCount);
 
     public AuctionItem getAuctionItem(int id);
+
+    public void bid(int auctionItemId, float amount, BidType bidType);
 }

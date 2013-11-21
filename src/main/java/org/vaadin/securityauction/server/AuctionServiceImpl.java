@@ -16,6 +16,7 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.vaadin.securityauction.shared.AuctionItem;
 import org.vaadin.securityauction.shared.AuctionService;
+import org.vaadin.securityauction.shared.BidType;
 import org.vaadin.securityauction.shared.User;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -98,6 +99,12 @@ public class AuctionServiceImpl extends RemoteServiceServlet implements
         } finally {
             em.close();
         }
+    }
+
+    @Override
+    public void bid(int auctionItemId, float amount, BidType bidType) {
+        System.out.println("Got " + amount + "€ bid for " + auctionItemId
+                + " with type " + bidType);
     }
 
 }
