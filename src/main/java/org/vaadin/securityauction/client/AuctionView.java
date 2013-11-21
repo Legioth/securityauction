@@ -4,6 +4,7 @@ import org.vaadin.securityauction.shared.AuctionItem;
 import org.vaadin.securityauction.shared.AuctionServiceAsync;
 import org.vaadin.securityauction.shared.Bid;
 import org.vaadin.securityauction.shared.BidType;
+import org.vaadin.securityauction.shared.LoginRequiredException;
 import org.vaadin.securityauction.shared.User;
 
 import com.google.gwt.core.client.GWT;
@@ -151,15 +152,24 @@ public class AuctionView extends Composite {
 
         AuctionServiceAsync service = AuctionServiceAsync.Util.getInstance();
         service.bid(auctionId, amount, bidType, null,
-                new AsyncCallback<Void>() {
+                new AsyncCallback<AuctionItem>() {
                     @Override
                     public void onFailure(Throwable caught) {
-                        Window.alert("Bid failed: " + caught.getMessage());
+                        if (caught instanceof LoginRequiredException) {
+                            Window.alert("You must be logged in to make a bet.");
+                        } else {
+                            Window.alert("Bid failed: " + caught.getMessage());
+                        }
                     }
 
                     @Override
-                    public void onSuccess(Void result) {
-                        Window.alert("Thank you for bidding");
+                    public void onSuccess(AuctionItem updatedItem) {
+                        if (updatedItem == null) {
+                            Window.alert("There was an undefined problem processing your bid");
+                        } else {
+                            Window.alert("Thank you for bidding");
+                            updateFields(updatedItem);
+                        }
                     }
                 });
 

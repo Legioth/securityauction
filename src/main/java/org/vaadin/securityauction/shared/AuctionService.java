@@ -20,5 +20,6 @@ public interface AuctionService extends RemoteService {
 
     public AuctionItem getAuctionItem(int id);
 
-    public void bid(int auctionItemId, float amount, BidType bidType, Date bidTime);
+    public AuctionItem bid(int auctionItemId, float amount, BidType bidType,
+            Date bidTime) throws LoginRequiredException;
 }

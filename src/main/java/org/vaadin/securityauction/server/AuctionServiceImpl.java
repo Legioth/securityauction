@@ -20,6 +20,7 @@ import org.vaadin.securityauction.shared.AuctionItem;
 import org.vaadin.securityauction.shared.AuctionService;
 import org.vaadin.securityauction.shared.Bid;
 import org.vaadin.securityauction.shared.BidType;
+import org.vaadin.securityauction.shared.LoginRequiredException;
 import org.vaadin.securityauction.shared.User;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -109,11 +110,11 @@ public class AuctionServiceImpl extends RemoteServiceServlet implements
     }
 
     @Override
-    public void bid(int auctionItemId, float amount, BidType bidType,
-            Date bidTime) {
+    public AuctionItem bid(int auctionItemId, float amount, BidType bidType,
+            Date bidTime) throws LoginRequiredException {
         User user = userService.getCurrentUser();
         if (user == null) {
-            return;
+            throw new LoginRequiredException();
         }
 
         EntityManager em = factory.createEntityManager();
@@ -136,8 +137,10 @@ public class AuctionServiceImpl extends RemoteServiceServlet implements
                 em.flush();
             }
 
+            return item;
         } catch (Exception e) {
             Logger.getAnonymousLogger().log(Level.WARNING, e.getMessage());
+            return null;
         } finally {
             em.getTransaction().commit();
             em.close();
