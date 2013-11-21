@@ -9,6 +9,9 @@ import com.google.gwt.user.client.rpc.RemoteService;
  * The client side stub for the RPC service.
  */
 public interface AuctionService extends RemoteService {
+    
+    public User getCurrentUser();
+    
     public User authenticate(String username, String password);
 
     public void logout();

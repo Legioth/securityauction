@@ -144,4 +144,9 @@ public class AuctionServiceImpl extends RemoteServiceServlet implements
         }
     }
 
+    @Override
+    public User getCurrentUser() {
+        return userService.getCurrentUser();
+    }
+
 }

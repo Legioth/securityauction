@@ -18,17 +18,38 @@ import com.google.gwt.user.client.ui.TextBox;
 public class LoginWidget extends Composite {
     SimplePanel content = new SimplePanel();
     private SecurityAuction auction;
+    private Label errorText;
+    private FlowPanel layout;
 
     public LoginWidget(SecurityAuction auction) {
         this.auction = auction;
         initWidget(content);
-        showLoginForm();
+        
+        AuctionServiceAsync service = AuctionServiceAsync.Util
+                .getInstance();
+        service.getCurrentUser(new AsyncCallback<User>() {
+            
+            @Override
+            public void onSuccess(User result) {
+                if(result == null) {
+                    showLoginForm();
+                } else {
+                    setLoggedIn(result);
+                }
+            }
+            
+            @Override
+            public void onFailure(Throwable caught) {
+                showLoginForm();
+                showErrorText(caught.getMessage());
+            }
+        });
     }
 
     private void showLoginForm() {
-        final FlowPanel layout = new FlowPanel();
+        layout = new FlowPanel();
 
-        final Label errorText = new Label();
+        errorText = new Label();
 
         final TextBox username = new TextBox();
         final PasswordTextBox password = new PasswordTextBox();
@@ -53,12 +74,7 @@ public class LoginWidget extends Composite {
                                 showErrorText(caught.getMessage());
                             }
 
-                            private void showErrorText(String string) {
-                                errorText.setText(string);
-                                if (errorText.getParent() == null) {
-                                    layout.add(errorText);
-                                }
-                            }
+                            
                         });
             }
         });
@@ -68,6 +84,13 @@ public class LoginWidget extends Composite {
         layout.add(loginButton);
 
         content.setWidget(layout);
+    }
+    
+    private void showErrorText(String string) {
+        errorText.setText(string);
+        if (errorText.getParent() == null) {
+            layout.add(errorText);
+        }
     }
 
     private void setLoggedIn(User user) {
