@@ -134,4 +134,8 @@
 			<column name="close_date">2013-12-02</column>
 		</update>
 	</changeSet>
+	
+	<changeSet id="10" author="kim">
+		<modifyDataType tableName="auction_item" columnName="subject" newDataType="VARCHAR(3000)"/>
+	</changeSet>
 </databaseChangeLog>
