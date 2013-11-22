@@ -32,3 +32,32 @@ h1 {
 #closeButton {
   margin: 15px 6px 6px;
 }
+
+
+.dock {
+	margin: auto;
+	background-color: #ffffff;
+}
+
+body {
+	background-color: #eeeeee !important;
+}
+
+.header {
+	background-color: #1083b5;	
+	padding: 20px 10px;
+}
+
+.logo {
+	font-size: 36px; 
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+	color: #fff;	
+}
+
+.logo span {
+	color: #fe4c12;
+}
+
+.login {
+	color: #fff;	
+}

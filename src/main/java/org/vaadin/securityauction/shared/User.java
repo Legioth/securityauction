@@ -28,6 +28,9 @@ public class User implements Serializable {
 
     @Column(name = "username")
     private String username;
+    
+    @Column(name = "password")
+    private String password;
 
     @ElementCollection(targetClass=Role.class, fetch=FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(referencedColumnName = "id", name="user_id"))
@@ -55,5 +58,12 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
 }

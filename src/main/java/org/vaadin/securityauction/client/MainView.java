@@ -30,6 +30,7 @@ import com.google.gwt.view.client.Range;
 public class MainView extends Composite {
     public MainView() {
         VerticalPanel panel = new VerticalPanel();
+        setStyleName("main");
 
         CellList<AuctionItem> cellList = new CellList<AuctionItem>(
                 new AbstractCell<AuctionItem>() {

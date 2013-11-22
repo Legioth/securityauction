@@ -61,10 +61,16 @@ public class SecurityAuction implements EntryPoint {
     private void bulidBaseUI() {
         RootLayoutPanel rootPanel = RootLayoutPanel.get();
         dock = new DockLayoutPanel(Unit.PX);
+        dock.setWidth("1000px");
+        dock.setStyleName("dock");
 
         DockLayoutPanel header = new DockLayoutPanel(Unit.PX);
+        header.addStyleName("header");
         header.addEast(getLoginWidget(), 300);
-        header.add(new HTML("Header"));
+        
+        HTML logo = new HTML("unsecure<span>auction</span>");
+        logo.setStyleName("logo");
+        header.add(logo);
 
         dock.addNorth(header, 100);
         rootPanel.add(dock);
