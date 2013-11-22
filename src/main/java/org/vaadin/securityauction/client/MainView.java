@@ -30,8 +30,6 @@ import com.google.gwt.view.client.Range;
 public class MainView extends Composite {
     public MainView() {
         VerticalPanel panel = new VerticalPanel();
-        setStyleName("main");
-
         CellList<AuctionItem> cellList = new CellList<AuctionItem>(
                 new AbstractCell<AuctionItem>() {
                     private final HashSet<String> consumedEvents = new HashSet<String>(
@@ -97,6 +95,12 @@ public class MainView extends Composite {
         panel.add(cellList);
         panel.add(pager);
 
+        cellList.setWidth("100%");
+        panel.setWidth("100%");
+        pager.setWidth("100%");
+        
         initWidget(panel);
+        setStyleName("main");
+        setWidth("100%");
     }
 }
