@@ -34,6 +34,8 @@ public abstract class AbstractCRUDView<BEANTYPE> extends VerticalSplitPanel
 
     private Button cancelBtn = new Button("Cancel", this);
 
+    private Button deleteBtn = new Button("Delete", this);
+
     private FieldGroup binder = new FieldGroup();
 
     public AbstractCRUDView() {
@@ -53,6 +55,7 @@ public abstract class AbstractCRUDView<BEANTYPE> extends VerticalSplitPanel
         HorizontalLayout buttonLayout = new HorizontalLayout();
         buttonLayout.addComponent(saveBtn);
         buttonLayout.addComponent(cancelBtn);
+        buttonLayout.addComponent(deleteBtn);
         buttonLayout.setSpacing(true);
         saveBtn.setStyleName(Reindeer.BUTTON_DEFAULT);
         form.addComponent(buttonLayout);
@@ -129,6 +132,8 @@ public abstract class AbstractCRUDView<BEANTYPE> extends VerticalSplitPanel
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+        } else if (deleteBtn.equals(event.getButton())) {
+            throw new RuntimeException("Not yet implemented");
         } else {
             binder.discard();
             table.select(null);
