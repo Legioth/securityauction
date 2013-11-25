@@ -111,7 +111,7 @@ public class AuctionView extends Composite {
             descriptionSpan.setInnerText(result.getDescription());
             contentHolder.removeClassName(style.hidden());
 
-            for (int i = 0; i < bidList.getChildCount(); i++) {
+            while (bidList.getChildCount() != 0) {
                 bidList.getChild(0).removeFromParent();
             }
 
