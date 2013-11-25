@@ -73,10 +73,10 @@ public class AuctionView extends Composite {
     private SecurityAuction auction;
 
     public AuctionView(SecurityAuction auction, int auctionId) {
-        setStyleName("auction");
         this.auction = auction;
         this.auctionId = auctionId;
         initWidget(uiBinder.createAndBindUi(this));
+        setStyleName("auction");
 
         User user = auction.getCurrentUser();
         if (user == null) {
