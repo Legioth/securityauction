@@ -5,6 +5,9 @@ import org.vaadin.securityauction.shared.User;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -20,6 +23,8 @@ public class LoginWidget extends Composite {
     private SecurityAuction auction;
     private Label errorText;
     private FlowPanel layout;
+
+    private Button loginButton;
 
     public LoginWidget(SecurityAuction auction) {
         this.auction = auction;
@@ -45,6 +50,16 @@ public class LoginWidget extends Composite {
                 showErrorText(caught.getMessage());
             }
         });
+
+        addDomHandler(new KeyDownHandler() {
+            @Override
+            public void onKeyDown(KeyDownEvent event) {
+                if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER
+                        && loginButton != null && loginButton.isAttached()) {
+                    loginButton.click();
+                }
+            }
+        }, KeyDownEvent.getType());
     }
 
     private void showLoginForm() {
@@ -54,7 +69,7 @@ public class LoginWidget extends Composite {
 
         final TextBox username = new TextBox();
         final PasswordTextBox password = new PasswordTextBox();
-        Button loginButton = new Button("Login", new ClickHandler() {
+        loginButton = new Button("Login", new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
                 AuctionServiceAsync service = AuctionServiceAsync.Util
@@ -104,6 +119,8 @@ public class LoginWidget extends Composite {
             showLoginForm();
         } else {
             FlowPanel layout = new FlowPanel();
+
+            loginButton = null;
 
             layout.add(new Label("Logged in as " + user.getUsername()));
             layout.add(new Button("Log out", new ClickHandler() {
