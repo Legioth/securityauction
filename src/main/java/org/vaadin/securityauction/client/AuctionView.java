@@ -60,6 +60,9 @@ public class AuctionView extends Composite {
     DivElement bidBox;
 
     @UiField
+    DivElement noBidBox;
+
+    @UiField
     ListBox typeBox;
 
     @UiField
@@ -81,7 +84,9 @@ public class AuctionView extends Composite {
         User user = auction.getCurrentUser();
         if (user == null) {
             bidBox.getStyle().setDisplay(Display.NONE);
+            noBidBox.setInnerText("Please log in to place bids");
         } else {
+            noBidBox.getStyle().setDisplay(Display.NONE);
             BidType[] values = BidType.values();
             for (BidType bidType : values) {
                 if (bidType.isAllowedWithRoles(user.getRoles())) {
@@ -125,6 +130,17 @@ public class AuctionView extends Composite {
                 LIElement li = Document.get().createLIElement();
                 li.setInnerText("No bids yet");
                 bidList.appendChild(li);
+            }
+
+            if (auction.getCurrentUser() != null) {
+                if (result.isClosed()) {
+                    noBidBox.setInnerText("Auction is closed");
+                    noBidBox.getStyle().clearDisplay();
+                    bidBox.getStyle().setDisplay(Display.NONE);
+                } else {
+                    bidBox.getStyle().clearDisplay();
+                    noBidBox.getStyle().setDisplay(Display.NONE);
+                }
             }
 
         } else {

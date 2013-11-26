@@ -24,6 +24,8 @@
 				<g:TextBox ui:field="amountBox"></g:TextBox>
 				<g:Button ui:field="button" text="Bid" />
 			</div>
+			<div ui:field="noBidBox">
+			</div>
 		</div>
 	</g:HTMLPanel>
 </ui:UiBinder> 

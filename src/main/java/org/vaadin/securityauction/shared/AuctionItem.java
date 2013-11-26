@@ -16,7 +16,6 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "auction_item")
@@ -121,7 +120,7 @@ public class AuctionItem implements Serializable {
     }
 
     public boolean isClosed() {
-        return new Date().before(getCloseDate());
+        return new Date().after(getCloseDate());
     }
 
 }
