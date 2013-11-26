@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import org.apache.shiro.SecurityUtils;
 import org.vaadin.securityauction.vaadin.views.ErrorView;
 
+import com.vaadin.annotations.Title;
 import com.vaadin.cdi.CDIUI;
 import com.vaadin.cdi.CDIViewProvider;
 import com.vaadin.navigator.Navigator;
@@ -22,6 +23,7 @@ import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @CDIUI
+@Title("Edit acution items")
 public class AdministrationUI extends UI {
     
     @Inject
