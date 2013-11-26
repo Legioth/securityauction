@@ -44,9 +44,6 @@ public class AuctionItem implements Serializable {
     @Column(name = "close_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date closeDate;
-    
-    @Transient
-    private boolean closed;
 
     public AuctionItem() {
         // GWT RPC constructor
@@ -124,11 +121,7 @@ public class AuctionItem implements Serializable {
     }
 
     public boolean isClosed() {
-        return closed;
-    }
-
-    public void setClosed(boolean closed) {
-        this.closed = closed;
+        return new Date().before(getCloseDate());
     }
 
 }
