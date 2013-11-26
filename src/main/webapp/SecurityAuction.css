@@ -66,3 +66,7 @@ body {
 	color: #fff;
 	display: block;
 }
+
+.auction, .main {
+	padding: 20px;
+} 
