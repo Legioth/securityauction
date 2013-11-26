@@ -12,6 +12,7 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -62,6 +63,15 @@ public class AdministrationUI extends UI {
         if (SecurityUtils.getSubject().hasRole("ADMIN")) {
             createButton("Administration", "admin");
         }
+
+        buttonLayout.addComponent(new Button("Back to browsing",
+                new ClickListener() {
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        getPage().setLocation(VaadinServlet.getCurrent()
+                                .getServletContext().getContextPath());
+                    }
+                }));
 
         layout.addComponent(buttonLayout);
     }
