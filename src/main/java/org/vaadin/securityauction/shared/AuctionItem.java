@@ -37,7 +37,7 @@ public class AuctionItem implements Serializable {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id")
-    @OrderBy(value = "amount DESC")
+    @OrderBy(value = "amount ASC")
     private List<Bid> bids;
 
     @Column(name = "close_date")
