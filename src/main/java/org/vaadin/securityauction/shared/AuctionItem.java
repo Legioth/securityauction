@@ -16,6 +16,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "auction_item")
@@ -43,6 +44,9 @@ public class AuctionItem implements Serializable {
     @Column(name = "close_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date closeDate;
+    
+    @Transient
+    private boolean closed;
 
     public AuctionItem() {
         // GWT RPC constructor
@@ -117,6 +121,14 @@ public class AuctionItem implements Serializable {
 
     public void setCloseDate(Date closeDate) {
         this.closeDate = closeDate;
+    }
+
+    public boolean isClosed() {
+        return closed;
+    }
+
+    public void setClosed(boolean closed) {
+        this.closed = closed;
     }
 
 }
