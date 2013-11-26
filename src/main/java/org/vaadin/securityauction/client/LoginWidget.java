@@ -3,6 +3,8 @@ package org.vaadin.securityauction.client;
 import org.vaadin.securityauction.shared.AuctionServiceAsync;
 import org.vaadin.securityauction.shared.User;
 
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -99,6 +101,13 @@ public class LoginWidget extends Composite {
         layout.add(loginButton);
 
         content.setWidget(layout);
+
+        Scheduler.get().scheduleFinally(new ScheduledCommand() {
+            @Override
+            public void execute() {
+                username.setFocus(true);
+            }
+        });
     }
 
     private void showErrorText(String string) {
