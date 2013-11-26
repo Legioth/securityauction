@@ -61,3 +61,8 @@ body {
 .login {
 	color: #fff;	
 }
+
+.login .gwt-Anchor {
+	color: #fff;
+	display: block;
+}

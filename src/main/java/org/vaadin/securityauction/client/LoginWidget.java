@@ -10,6 +10,7 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -123,6 +124,7 @@ public class LoginWidget extends Composite {
             loginButton = null;
 
             layout.add(new Label("Logged in as " + user.getUsername()));
+            layout.add(new Anchor("Edit your items", "./edit"));
             layout.add(new Button("Log out", new ClickHandler() {
                 @Override
                 public void onClick(ClickEvent event) {
