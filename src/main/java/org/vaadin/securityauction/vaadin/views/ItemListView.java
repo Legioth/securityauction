@@ -4,7 +4,6 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -82,7 +81,8 @@ public class ItemListView extends AbstractCRUDView<AuctionItem> {
 
     @Override
     protected Object[] getVisibleColumns() {
-        return new Object[] { "subject", "description", "highestBid", "closeDate" };
+        return new Object[] { "subject", "description", "highestBid",
+                "closeDate" };
     }
 
     @Override

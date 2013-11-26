@@ -23,24 +23,24 @@ import javax.persistence.TemporalType;
 public class Bid implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
     @Column(name = "amount")
     private float amount;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bidder")
     private User bidder;
 
     @Column(name = "item_id")
     private int itemId;
-    
+
     @Column(name = "bid_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date bidTime;
-    
+
     @Column(name = "bid_type")
     @Enumerated(EnumType.STRING)
     private BidType bidType;

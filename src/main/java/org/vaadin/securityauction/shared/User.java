@@ -22,20 +22,20 @@ import javax.persistence.Table;
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
     @Column(name = "username")
     private String username;
-    
+
     @Column(name = "password")
     private String password;
 
-    @ElementCollection(targetClass=Role.class, fetch=FetchType.EAGER)
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(referencedColumnName = "id", name="user_id"))
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(referencedColumnName = "id", name = "user_id"))
     @Enumerated(EnumType.STRING)
-    @Column(name="role")
+    @Column(name = "role")
     private Set<Role> roles;
 
     public User() {

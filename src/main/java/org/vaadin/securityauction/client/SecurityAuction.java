@@ -67,7 +67,7 @@ public class SecurityAuction implements EntryPoint {
         DockLayoutPanel header = new DockLayoutPanel(Unit.PX);
         header.addStyleName("header");
         header.addEast(getLoginWidget(), 300);
-        
+
         HTML logo = new HTML("unsecure<span>auction</span>");
         logo.setStyleName("logo");
         header.add(logo);

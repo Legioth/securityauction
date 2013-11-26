@@ -11,8 +11,6 @@ import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.vaadin.securityauction.shared.AuctionItem;
 import org.vaadin.securityauction.shared.User;
 
 public class UserService implements Serializable {

@@ -12,7 +12,7 @@ import com.vaadin.ui.Layout;
 
 @CDIView("admin")
 public class AdminView extends AbstractCRUDView<User> {
-    
+
     @Inject
     private UserService userService;
 

@@ -31,20 +31,19 @@ public class LoginWidget extends Composite {
         this.auction = auction;
         initWidget(content);
         setStyleName("login");
-        
-        AuctionServiceAsync service = AuctionServiceAsync.Util
-                .getInstance();
+
+        AuctionServiceAsync service = AuctionServiceAsync.Util.getInstance();
         service.getCurrentUser(new AsyncCallback<User>() {
-            
+
             @Override
             public void onSuccess(User result) {
-                if(result == null) {
+                if (result == null) {
                     showLoginForm();
                 } else {
                     setLoggedIn(result);
                 }
             }
-            
+
             @Override
             public void onFailure(Throwable caught) {
                 showLoginForm();

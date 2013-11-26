@@ -19,22 +19,21 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @CDIUI
 @Title("Edit acution items")
 public class AdministrationUI extends UI {
-    
+
     @Inject
     private CDIViewProvider provider;
-    
+
     private HorizontalLayout layout = new HorizontalLayout();
 
     private CssLayout buttonLayout;
-    
+
     private ViewDisplay viewDisplay = new ViewDisplay() {
-        
+
         @Override
         public void showView(View view) {
             layout.removeAllComponents();
@@ -47,37 +46,36 @@ public class AdministrationUI extends UI {
 
     @Override
     protected void init(VaadinRequest request) {
-        Navigator navigator =  new Navigator(this, viewDisplay);
+        Navigator navigator = new Navigator(this, viewDisplay);
         navigator.addProvider(provider);
         navigator.setErrorView(ErrorView.class);
-        
+
         layout.setSpacing(true);
         layout.setSizeFull();
         setContent(layout);
-        
+
         buttonLayout = new CssLayout();
         buttonLayout.setWidth("150px");
         createButton("My items", "");
         createButton("+", "/new");
-        
-        if(SecurityUtils.getSubject().hasRole("ADMIN")) {
+
+        if (SecurityUtils.getSubject().hasRole("ADMIN")) {
             createButton("Administration", "admin");
         }
-        
+
         layout.addComponent(buttonLayout);
     }
 
     private void createButton(String name, final String view) {
         Button button = new Button(name, new ClickListener() {
-            
+
             @Override
             public void buttonClick(ClickEvent event) {
                 getNavigator().navigateTo(view);
-                
+
             }
         });
         buttonLayout.addComponent(button);
     }
-    
-    
+
 }

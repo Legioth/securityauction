@@ -98,7 +98,7 @@ public class MainView extends Composite {
         cellList.setWidth("100%");
         panel.setWidth("100%");
         pager.setWidth("100%");
-        
+
         initWidget(panel);
         setStyleName("main");
         setWidth("100%");

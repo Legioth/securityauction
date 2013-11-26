@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
 public class AuctionItem implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
@@ -37,9 +37,9 @@ public class AuctionItem implements Serializable {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id")
-    @OrderBy(value="amount DESC")
+    @OrderBy(value = "amount DESC")
     private List<Bid> bids;
-    
+
     @Column(name = "close_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date closeDate;
